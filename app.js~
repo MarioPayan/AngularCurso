@@ -1,0 +1,46 @@
+(function(){
+  var app = angular.module('ppal',[]);
+  
+  app.controller('Controlador', function(){
+    this.product = gem;
+  });
+  
+  var gem = [
+    {
+      name: 'Nombresito',
+      price: 9.99,
+      description: 'Descripcionsita',
+      canPurchase: false,
+      soldOut: true
+    },
+    {
+      name: 'Nombresito22',
+      price: 19.99,
+      description: 'Descripcionsita22',
+      canPurchase: false,
+      soldOut: true
+    },
+    {
+      name: 'Nombresito33',
+      price: 29.99,
+      description: 'Descripcionsita33',
+      canPurchase: false,
+      soldOut: true
+    },
+    {
+      name: 'Nombresito44',
+      price: 39.99,
+      description: 'Descripcionsita44',
+      canPurchase: false,
+      soldOut: true
+    },
+    {
+      name: 'Nombresito55',
+      price: 49.99,
+      description: 'Descripcionsita55',
+      canPurchase: false,
+      soldOut: true
+    }
+  ];
+  
+})();

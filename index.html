@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+	<html ng-app="ppal">
+	Si usted ve una carita feliz despues de esto, todo est&aacute; bien...
+		<head>
+			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+			<script type="text/javascript" src="app.js"></script>
+			<script type="text/javascript" src="product.js"></script>
+
+			<style type="text/css">
+				.ng-invalid.ng-dirty {
+					border-color: #FA787E }
+				.ng-valid.ng-dirty {
+					border-color: #78FA89 }
+				
+
+				#myForm{
+					max-width: 400px;
+					padding: 10px;
+					border: 1px dotted lightgray;
+					margin-left:  10px;
+				}
+
+				#myForm input, textarea, select{
+					margin-bottom: 5px;
+				}
+
+			</style>
+
+		</head>
+		<body ng-controller="Controlador as ctrl">
+			:D
+			<div ng-repeat="product in ctrl.product | limitTo:100 | orderBy:'-price'" <!--ng-hide="product.soldOut"-- >
+
+			<product-title></product-title>
+
+			  <p> <img ng-src="{{product.images[0].thumb}}"></p>
+
+			  <product-panels></product-panels>
+				  
+			  <button ng-show="product.canPurchase"> Add to cart </button>
+			</div>
+		</body>
+	</html>
+

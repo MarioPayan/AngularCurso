@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+	<html ng-app="ppal">
+		<head>
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+			<script src="app.js"></script>
+		</head>
+		<body ng-controller="Controlador as ctrl">
+			:D
+			<div ng-repeat="product in ctrl.product" ng-hide="ctrl.product.soldOut">
+			  <h1>Product Name: {{product.name}}</h1>
+			  <h2>Product Price: ${{product.price}}</h2>
+			  <p>Product Description: {{product.description}}</p>
+			  <button ng-show="ctrl.product.canPurchase"> Add to cart </button>
+			</div>
+		</body>
+	</html>
+
