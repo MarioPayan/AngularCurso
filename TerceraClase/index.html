@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="store" >
+<head>
+	<!-- Es una buena practica dejar los import aca en el head -->
+	<!-- Angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
+	<!-- jQuery -->
+	<script src="jquery-1.12.1.min.js"></script>
+	<script src="app.js"></script>
+
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+
+	<body>
+		<div ng-controller="StoreController as store" >	<!-- el alcance o "scope" de el "store" es hasta donde cierre el div y esconde todo el div si la expresion es verdadera e itera por producto en store.products-->
+			<div ng-repeat="product in store.products | limitTo: 3" ng-hide="product.soldOut"> <!-- limita el ng-repeat a 3 -->
+				<h1>{{product.name}}</h1>
+				<h2 > {{product.price | currency}}</h2> <!--filtro para concurrencia-->
+				<p><img ng-src="{{product.images[0].full}}"/></p> <!--ng-src para que lo cargue desde el angular-->
+				<section ng-controller="PanelController as panel">
+					<ul class="nav nav-pills">
+						<li ng-class="{active:panel.isSelected(1)}"> <a href ng-click="panel.selectTab(1)"> Description </a> </li> <!--si la expresion despues del active: es verdadero la clase active se aplica-->
+						<li ng-class="{active:panel.isSelected(2)}"> <a href ng-click="panel.selectTab(2)"> Specifications </a> </li>
+						<li ng-class="{active:panel.isSelected(3)}"> <a href ng-click="panel.selectTab(3)"> Reviews </a> </li>
+					</ul>
+					<div class="panel" ng-show="panel.isSelected(1)">
+						<h4> Description </h4>
+						<p>{{product.description}}</p>
+					</div>
+					<div class="panel" ng-show="panel.isSelected(2)">
+						<h4> Specifications </h4>
+						<p>not yet</p>
+					</div>
+					<div class="panel" ng-show="panel.isSelected(3)">
+						<h4> Review </h4>
+						<blockquote ng-repeat="review in product.reviews"> <!-- bloque de comentario-->
+							<b> Stars: {{review.stars}}</b>
+							{{review.body}}
+							<cite>by: -{{review.author}}</cite>
+						</blockquote>
+						<div id="myForm">
+						<form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" class="form-group" novalidate> <!--se apaga la validacion de bootstrap cuando le hunda el boton del submit  ejecuta esta funcion y requiere que los campos esten bien para submitearlo-->
+							<select ng-model="reviewCtrl.review.stars" ng-init="reviewCtrl.review.stars =2" class = "form-control" required> <!--el init es mejor hacerla en el controlador, se deja aca para efectos de ejemplificar-->
+								<option value="1"> 1 star</option>
+								<option value="2"> 2 stars</option>
+							</select>
+							<textarea ng-model="reviewCtrl.review.body" required class = "form-control"></textarea> <!--form-control:bootstrap-->
+							<label>by:</label>
+							<input ng-model="reviewCtrl.review.author" type="email" class="form-control" required/>
+							<input type="submit" value="Submit" ng-disabled="!reviewForm.$valid" class="btn" ng-class="{'btn-success': reviewForm.$valid}"/> <!-- para deshabilitar el boton si no es valida la informacion del form y para mostrar el boton bien si es valido-->
+							<div> {{reviewForm.$valid}} </div>
+						</form>
+						</div>
+					</div>
+				</section>
+				<button ng-show="product.canPurchase"> Add to Cart </button><!-- muestra si la expresion es verdadera -->
+			</div>
+		</div>
+	</body>
+</html>
+

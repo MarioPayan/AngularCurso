@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="store" >
+<head>
+	<!-- Es una buena practica dejar los import aca en el head -->
+	<!-- Angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
+	<!-- jQuery -->
+	<script src="jquery-1.12.1.min.js"></script>
+	<script src="app.js"></script>
+	<script src="products.js"></script>
+
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+
+	<body>
+		<div ng-controller="StoreController as store" >	<!-- el alcance o "scope" de el "store" es hasta donde cierre el div y esconde todo el div si la expresion es verdadera e itera por producto en store.products-->
+			<div ng-repeat="product in store.products | limitTo: 3" ng-hide="product.soldOut"> <!-- limita el ng-repeat a 3 -->
+				<!--<h3 ng-include="'product-title.html'"></h3> <!--ng-include: para incluir un codigo de otro archivo aqui, una plantilla-->
+				<product-title></product-title>
+				<p><img ng-src="{{product.images[0].full}}"/></p> <!--ng-src para que lo cargue desde el angular-->
+				<!--<product-panels ng-controller="PanelController as panel"></product-panels> <!-- le paso el controlador para que sea el controlador quien controle esta plantilla-->
+				<product-panels></product-panels><!--para usar la directiva en otras paginas porque esta la funcion de las pestañas ya hechas y tambien los paneles y los reviews-->
+				<button class="btn" ng-show="product.canPurchase"> Add to Cart </button><!-- muestra si la expresion es verdadera -->
+			</div>
+		</div>
+	</body>
+</html>
+
